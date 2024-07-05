@@ -8,6 +8,7 @@ import { RatingOverTime } from "./components/RatingOverTime/RatingOverTime";
 function App() {
   return (
     <div className="container">
+      <h1>Dashboard</h1>
       <div className="chart-ctn">
         <div className="set-width">
           <h2>Biểu đồ Đánh Giá Trung Bình Các Thể Loại</h2>

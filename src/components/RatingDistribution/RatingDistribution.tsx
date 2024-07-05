@@ -76,7 +76,11 @@ export const RatingDistribution = () => {
           responsive: true,
           plugins: {
             legend: {
-              position: "top",
+              position: "right",
+              align: "start",
+              labels: {
+                padding: 20,
+              },
             },
             tooltip: {
               callbacks: {
@@ -86,6 +90,11 @@ export const RatingDistribution = () => {
                   return `Rating ${rating}: ${count}`;
                 },
               },
+            },
+          },
+          layout: {
+            padding: {
+              left: 50,
             },
           },
         },

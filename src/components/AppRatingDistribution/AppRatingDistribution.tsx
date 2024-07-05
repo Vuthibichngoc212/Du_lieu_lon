@@ -70,7 +70,11 @@ export const AppRatingDistribution = () => {
           responsive: true,
           plugins: {
             legend: {
-              position: "top",
+              position: "right",
+              align: "start",
+              labels: {
+                padding: 20,
+              },
             },
             tooltip: {
               callbacks: {
@@ -80,6 +84,11 @@ export const AppRatingDistribution = () => {
                   return `Rating ${rating}: ${count}`;
                 },
               },
+            },
+          },
+          layout: {
+            padding: {
+              left: 50,
             },
           },
         },
@@ -96,7 +105,9 @@ export const AppRatingDistribution = () => {
   return (
     <>
       {error && <div>{error}</div>}
-      <canvas ref={chartRef} id="myChart"></canvas>
+      <div className="chart-container">
+        <canvas ref={chartRef} id="myChart"></canvas>
+      </div>
     </>
   );
 };
