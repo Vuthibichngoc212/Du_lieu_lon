@@ -1,13 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef, useState } from "react";
 import Chart from "chart.js/auto";
 
 interface DataItem {
-  genre: string;
+  release_year: number;
   average_rating: number;
 }
 
-export const ChartComponent = () => {
+export const RatingOverTime = () => {
   const chartRef = useRef<HTMLCanvasElement | null>(null);
   const [data, setData] = useState<DataItem[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -15,13 +14,20 @@ export const ChartComponent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log("Fetching data...");
         const response = await fetch(
-          "http://192.168.1.7:8000/average-rating-by-genre/"
+          "http://192.168.1.7:8000/rating-over-time/"
         );
 
         const result: DataItem[] = await response.json();
-        setData(result);
-        setError(null); // Clear any previous errors
+        // Loại trừ các năm 2025 và 2026
+        const filteredResult = result.filter(
+          (item) => item.release_year !== 2025 && item.release_year !== 2026
+        );
+
+        setData(filteredResult);
+        setError(null);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         console.error("Error fetching data:", error);
       }
@@ -35,12 +41,12 @@ export const ChartComponent = () => {
 
     if (chartRef.current && data.length > 0) {
       chart = new Chart(chartRef.current, {
-        type: "bar",
+        type: "line",
         data: {
-          labels: data.map((item) => item.genre),
+          labels: data.map((item) => item.release_year),
           datasets: [
             {
-              label: "Average Rating",
+              label: "Rating Over Time",
               data: data.map((item) => item.average_rating),
               backgroundColor: "rgba(75, 192, 192, 0.5)",
               borderColor: "rgba(75, 192, 192, 1)",
@@ -51,7 +57,6 @@ export const ChartComponent = () => {
         options: {
           scales: {
             y: {
-              max: 10,
               beginAtZero: true,
             },
           },

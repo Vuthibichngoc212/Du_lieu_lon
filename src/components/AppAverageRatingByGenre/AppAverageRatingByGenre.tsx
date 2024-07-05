@@ -7,7 +7,7 @@ interface DataItem {
   average_rating: number;
 }
 
-export const ChartComponent = () => {
+export const AppAverageRatingByGenre = () => {
   const chartRef = useRef<HTMLCanvasElement | null>(null);
   const [data, setData] = useState<DataItem[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -16,7 +16,7 @@ export const ChartComponent = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "http://192.168.1.7:8000/average-rating-by-genre/"
+          "http://192.168.1.7:8000/app-average-rating-by-genre/"
         );
 
         const result: DataItem[] = await response.json();
@@ -40,7 +40,7 @@ export const ChartComponent = () => {
           labels: data.map((item) => item.genre),
           datasets: [
             {
-              label: "Average Rating",
+              label: "App Average Rating By Genre",
               data: data.map((item) => item.average_rating),
               backgroundColor: "rgba(75, 192, 192, 0.5)",
               borderColor: "rgba(75, 192, 192, 1)",
